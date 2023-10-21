@@ -1,4 +1,5 @@
-# 
+# Prompts user for two points on earth, computes orthodromic distance
+# between the two points and prints it
 
 import math as m
 
