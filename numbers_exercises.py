@@ -21,5 +21,11 @@ def steps(number: int) -> int:
         steps += 1
     return steps
 
+def square_root(number: int) -> int:
+    odd = 1
+    while number > 0:
+        number -= odd
+        odd += 2
+    return odd // 2
 
-print(steps(16))
+print(square_root(16))
