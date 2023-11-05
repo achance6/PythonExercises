@@ -14,5 +14,5 @@ def is_valid(isbn: str):
 
 #print(is_valid("1934-425-a-20"))
 #print(is_valid("1934-425-20"))
-print(is_valid("3-598-21508-8"))
-print(is_valid("3-598-21507-X"))
+#print(is_valid("3-598-21508-8"))
+#print(is_valid("3-598-21507-X"))
