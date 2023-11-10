@@ -21,7 +21,7 @@ class Alien:
 
     total_aliens_created = 0
 
-    def __init__(self, x_coord: int, y_coord: int) -> 'Alien':
+    def __init__(self, x_coord: int, y_coord: int) -> None:
         self.x_coordinate = x_coord
         self.y_coordinate = y_coord
         self.health = 3
