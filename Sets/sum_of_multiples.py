@@ -9,4 +9,4 @@ def get_multiples(num: int, limit: int) -> set[int]:
 
 # print(get_multiples(5, 15))
 # print(sum_of_multiples(20, [3, 5]))
-print(sum_of_multiples(1, [0]))
+# print(sum_of_multiples(1, [0]))
