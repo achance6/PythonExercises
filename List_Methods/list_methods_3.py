@@ -31,12 +31,9 @@ def resistor_label(colors: list[str]) -> str:
     v_1 = Color[colors[0]].value if len(colors) > 0 else None
     v_2 = Color[colors[1]].value if len(colors) > 1 else None
     v_3 = Color[colors[2]].value if len(colors) == 5 else None
-    if len(colors) == 3:
+    if 3 <= len(colors) <= 4:
         mult = Color[colors[2]].value
-        tol = 0
-    elif len(colors) == 4:
-        mult = Color[colors[2]].value
-        tol = Tolerance_Color[colors[3]].value
+        tol = Tolerance_Color[colors[3]].value if len(colors) == 4 else 0
     elif len(colors) == 5:
         mult = Color[colors[3]].value
         tol = Tolerance_Color[colors[4]].value
@@ -49,12 +46,12 @@ def resistor_label(colors: list[str]) -> str:
     elif len(colors) == 5:
         ohms = ((100 * v_1) + (10 * v_2) + v_3) * (10 ** mult)
     
-    prefix, ohms = ohm_prefix(ohms)
+    prefix, ohms = apply_ohm_prefix(ohms)
     if int(ohms) == ohms: ohms = int(ohms)
 
     return f'{ohms} {prefix}ohms ±{tol}%'
 
-def ohm_prefix(ohms: int) -> tuple[str, int]:
+def apply_ohm_prefix(ohms: int) -> tuple[str, int]:
     prefix = ''
     if ohms >= 1_000_000_000:
         prefix = 'giga'
@@ -67,9 +64,9 @@ def ohm_prefix(ohms: int) -> tuple[str, int]:
         ohms = round(ohms / 1_000, 2)
     return (prefix, ohms)
 
-# print(resistor_label(['Blue', 'Grey', 'Brown']))
-# print(resistor_label(['blue', 'violet', 'blue']))
-# print(resistor_label(['black', 'black', 'black']))
-# print(resistor_label(['orange', 'orange', 'brown', 'green']))
-# print(resistor_label(['orange', 'orange', 'blue', 'red']))
-# print(resistor_label(["red", "green", "yellow", "yellow", "brown"]))
+assert(resistor_label(['Blue', 'Grey', 'Brown']) == '680 ohms ±0%')
+assert(resistor_label(['blue', 'violet', 'blue']) == '67 megaohms ±0%')
+assert(resistor_label(['black', 'black', 'black']) == '0 ohms ±0%')
+assert(resistor_label(['orange', 'orange', 'brown', 'green']) == '330 ohms ±0.5%')
+assert(resistor_label(['orange', 'orange', 'blue', 'red']) == '33 megaohms ±2%')
+assert(resistor_label(["red", "green", "yellow", "yellow", "brown"]) == '2.54 megaohms ±1%')
