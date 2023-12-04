@@ -22,6 +22,9 @@ class Tolerance_Color(Enum):
     GOLD   = 5
     SILVER = 10
 
+GIGA_LIM = 1_000_000_000
+MEGA_LIM = 1_000_000
+KILO_LIM = 1_000
 
 def resistor_label(colors: list[str]) -> str:
     if len(colors) == 1: return '0 ohms'
@@ -56,15 +59,17 @@ def resistor_label(colors: list[str]) -> str:
 
 def apply_ohm_prefix(ohms: int) -> tuple[str, int]:
     prefix = ''
-    if ohms >= 1_000_000_000:
+    precision = 2
+
+    if ohms >= GIGA_LIM:
         prefix = 'giga'
-        ohms = round(ohms / 1_000_000_000, 2)
-    elif ohms >= 1_000_000:
+        ohms = round(ohms / GIGA_LIM, precision)
+    elif ohms >= MEGA_LIM:
         prefix = 'mega'
-        ohms = round(ohms / 1_000_000, 2)
-    elif ohms >= 1_000:
+        ohms = round(ohms / MEGA_LIM, precision)
+    elif ohms >= KILO_LIM:
         prefix = 'kilo'
-        ohms = round(ohms / 1_000, 2)
+        ohms = round(ohms / KILO_LIM, precision)
     return (prefix, ohms)
 
 assert(resistor_label(['Blue', 'Grey', 'Brown']) == '680 ohms ±0%')
