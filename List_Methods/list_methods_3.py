@@ -30,11 +30,14 @@ def resistor_label(colors: list[str]) -> str:
 
     v_1 = Color[colors[0]].value if len(colors) > 0 else None
     v_2 = Color[colors[1]].value if len(colors) > 1 else None
-    v_3 = Color[colors[2]].value if len(colors) == 5 else None
-    if 3 <= len(colors) <= 4:
+    if len(colors) == 3:
         mult = Color[colors[2]].value
-        tol = Tolerance_Color[colors[3]].value if len(colors) == 4 else 0
+        tol = 0
+    elif len(colors) == 4:
+        mult = Color[colors[2]].value
+        tol = Tolerance_Color[colors[3]].value
     elif len(colors) == 5:
+        v_3 = Color[colors[2]].value
         mult = Color[colors[3]].value
         tol = Tolerance_Color[colors[4]].value
     else:
