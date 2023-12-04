@@ -57,9 +57,8 @@ def resistor_label(colors: list[str]) -> str:
 
     return f'{ohms} {prefix}ohms ±{tol}%'
 
-def apply_ohm_prefix(ohms: int) -> tuple[str, int]:
+def apply_ohm_prefix(ohms: int, precision: int = 2) -> tuple[str, int]:
     prefix = ''
-    precision = 2
 
     if ohms >= GIGA_LIM:
         prefix = 'giga'
