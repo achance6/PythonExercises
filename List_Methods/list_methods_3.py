@@ -22,13 +22,15 @@ class Tolerance_Color(Enum):
     GOLD   = 5
     SILVER = 10
 
-GIGA_LIM = 1_000_000_000
-MEGA_LIM = 1_000_000
-KILO_LIM = 1_000
+GIGA_THR = 1_000_000_000
+MEGA_THR = 1_000_000
+KILO_THR = 1_000
 
 def resistor_label(colors: list[str]) -> str:
     if len(colors) == 1: return '0 ohms'
 
+    # So that upper doesn't need to be called everytime 
+    # a value is gotten from enums
     colors = [color.upper() for color in colors]
 
     v_1 = Color[colors[0]].value if len(colors) > 0 else None
@@ -53,22 +55,23 @@ def resistor_label(colors: list[str]) -> str:
         ohms = ((100 * v_1) + (10 * v_2) + v_3) * (10 ** mult)
     
     prefix, ohms = apply_ohm_prefix(ohms)
+    # Convert back to int if no data loss
     if int(ohms) == ohms: ohms = int(ohms)
 
     return f'{ohms} {prefix}ohms ±{tol}%'
 
-def apply_ohm_prefix(ohms: int, precision: int = 2) -> tuple[str, int]:
+def apply_ohm_prefix(ohms: int, precision: int = 2) -> tuple[str, int | float]:
     prefix = ''
 
-    if ohms >= GIGA_LIM:
+    if ohms >= GIGA_THR:
         prefix = 'giga'
-        ohms = round(ohms / GIGA_LIM, precision)
-    elif ohms >= MEGA_LIM:
+        ohms = round(ohms / GIGA_THR, precision)
+    elif ohms >= MEGA_THR:
         prefix = 'mega'
-        ohms = round(ohms / MEGA_LIM, precision)
-    elif ohms >= KILO_LIM:
+        ohms = round(ohms / MEGA_THR, precision)
+    elif ohms >= KILO_THR:
         prefix = 'kilo'
-        ohms = round(ohms / KILO_LIM, precision)
+        ohms = round(ohms / KILO_THR, precision)
     return (prefix, ohms)
 
 assert(resistor_label(['Blue', 'Grey', 'Brown']) == '680 ohms ±0%')
